@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import profile_img from '../../assets/profile_img1.jpg'
+import profile_img from '../../assets/Profile.png'
 import './Hero.css'
 import AnchorLink from 'react-anchor-link-smooth-scroll'
 import Arrow from '../../assets/arrow_icon.svg'
@@ -30,9 +30,9 @@ const Hero = () => {
 
   return (
     <div id='home' className='hero'>
-      <img src={profile_img} alt="" />
+      <img className='hero-img' src={profile_img} alt="" />
       <h1><span>I'm Sandip Gavali,</span> Frontend Devloper Based in Pune.</h1>
-      <p>I am a frontend developer from Pune, India with 1 year Experience.</p>
+      <p>I am a frontend developer from Pandharpur, India with 1 year Experience.</p>
 
       <div className="hero-action">
         <div className="hero-connect">

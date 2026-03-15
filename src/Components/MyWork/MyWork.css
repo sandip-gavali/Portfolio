@@ -84,3 +84,13 @@
         cursor: pointer;
     }
 }
+.mywork-container-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+}
+.mywork-container-box h3{
+    margin-top: 20px;
+}

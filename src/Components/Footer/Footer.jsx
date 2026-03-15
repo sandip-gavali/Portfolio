@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="footer-top">
         <div className="footer-top-left">
           <img src={footer_logo} alt="" />
-          <p>I am a frontend developer from Pune, INdia with 1 years of Experience in forntend Development.</p>
+          <p>I am a frontend developer from Pune, India with 1 years of Experience in forntend Development.</p>
         </div>
         <div className="footer-top-right">
           <div className="footer-email-input">
