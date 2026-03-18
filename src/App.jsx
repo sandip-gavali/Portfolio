@@ -8,9 +8,10 @@ import MyWork from './Components/MyWork/MyWork'
 import Contact from './Components/Contact/Contact'
 import Footer from './Components/Footer/Footer'
 import ProjectDetail from './Components/ProjectDetail/ProjectDetail'
+import Resume from './Components/Resume/Resume'
 import './App.css'
 
-// All your portfolio sections live here
+// All portfolio sections
 const Home = () => (
   <div className="app-drawer">
     <Navbar />
@@ -28,6 +29,7 @@ const App = () => {
     <Routes>
       <Route path="/"            element={<Home />} />
       <Route path="/project/:id" element={<ProjectDetail />} />
+      <Route path="/resume"      element={<Resume />} />
     </Routes>
   )
 }

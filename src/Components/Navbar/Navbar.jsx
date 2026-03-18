@@ -20,14 +20,12 @@ const Navbar = () => {
   const menuRef    = useRef(null)
   const overlayRef = useRef(null)
 
-  /* ── Scroll shadow boost ──────────────────────────── */
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  /* ── Lock body scroll when drawer is open ─────────── */
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -52,7 +50,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Backdrop overlay for mobile drawer */}
       <div ref={overlayRef} className="nav-overlay" onClick={closeMenu} />
 
       <nav
@@ -62,10 +59,8 @@ const Navbar = () => {
           background: 'rgba(6, 3, 14, 0.75)',
         } : {}}
       >
-        {/* Logo */}
         <img src={logo} alt="Logo" className="navbar-logo" />
 
-        {/* Hamburger (mobile) */}
         <button
           className="nav-mob-open"
           onClick={openMenu}
@@ -75,9 +70,7 @@ const Navbar = () => {
           <img src={menu_open} alt="" />
         </button>
 
-        {/* Nav Links */}
         <ul ref={menuRef} className="nav-menu" role="navigation">
-          {/* Close button (mobile drawer) */}
           <li
             className="nav-mob-close"
             onClick={closeMenu}
@@ -100,26 +93,12 @@ const Navbar = () => {
               <span className="nav-active-dot" aria-hidden="true" />
             </li>
           ))}
-
-          {/* Connect button inside mobile drawer */}
-          <li className="nav-menu-connect">
-            <AnchorLink
-              className="anchor-link"
-              href="#contact"
-              offset={50}
-              onClick={closeMenu}
-            >
-              Connect With Me
-            </AnchorLink>
-          </li>
         </ul>
 
-        {/* Desktop CTA */}
-        <div className="nav-connect">
-          <AnchorLink className="anchor-link" offset={50} href="#contact">
-            Connect With Me
-          </AnchorLink>
-        </div>
+        {/* AnchorLink is the direct element — no wrapper div */}
+        <AnchorLink className="nav-connect" offset={50} href="#contact">
+          Connect With Me
+        </AnchorLink>
       </nav>
     </>
   )
