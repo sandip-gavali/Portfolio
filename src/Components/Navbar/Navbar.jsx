@@ -1,36 +1,127 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import './Navbar.css'
 import logo from '../../assets/logo.png'
-import underline from '../../assets/nav_underline.svg'
-import AnchorLink from 'react-anchor-link-smooth-scroll';
+import AnchorLink from 'react-anchor-link-smooth-scroll'
 import menu_open from '../../assets/menu_open.svg'
 import menu_close from '../../assets/menu_close.svg'
 
+const NAV_LINKS = [
+  { id: 'home',     label: 'Home',      offset: 0  },
+  { id: 'about',    label: 'About Me',  offset: 50 },
+  { id: 'services', label: 'Services',  offset: 50 },
+  { id: 'work',     label: 'Portfolio', offset: 50 },
+  { id: 'feedback', label: 'Feedback',  offset: 50 },
+]
+
 const Navbar = () => {
-  const [menu, setMenu] = useState("home");
-  const menuRef=useRef();
-  const openMenu = ()=>{
-    menuRef.current.style.right="0";
+  const [active, setActive]     = useState('home')
+  const [isOpen, setIsOpen]     = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const menuRef    = useRef(null)
+  const overlayRef = useRef(null)
+
+  /* ── Scroll shadow boost ──────────────────────────── */
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  /* ── Lock body scroll when drawer is open ─────────── */
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [isOpen])
+
+  const openMenu = () => {
+    setIsOpen(true)
+    if (menuRef.current)    menuRef.current.style.right    = '0'
+    if (overlayRef.current) overlayRef.current.classList.add('open')
   }
-  const closeMenu = ()=>{
-    menuRef.current.style.right="-350px";
+
+  const closeMenu = () => {
+    setIsOpen(false)
+    if (menuRef.current)    menuRef.current.style.right    = '-100%'
+    if (overlayRef.current) overlayRef.current.classList.remove('open')
   }
+
+  const handleNav = (id) => {
+    setActive(id)
+    closeMenu()
+  }
+
   return (
-    <div className='navbar'>
-      <img src={logo} alt="" />
-      <img src={menu_open} onClick={openMenu} className='nav-mob-open' alt="" />
-      <ul ref={menuRef} className="nav-menu">
-        <img src={menu_close} onClick={closeMenu} alt="" className="nav-mob-close" />
-        <li><AnchorLink className='anchor-link' href='#home'><p onClick={() => setMenu("home")}>Home</p></AnchorLink>{menu === "home" ? <img src={underline} alt='' /> : <></>}</li>
-        <li><AnchorLink className='anchor-link' offset={50} href='#about'><p onClick={() => setMenu("about")}>About Me</p></AnchorLink>{menu === "about" ? <img src={underline} alt='' /> : <></>}</li>
-        <li><AnchorLink className='anchor-link' offset={50} href='#services'><p onClick={() => setMenu("services")}>Services</p></AnchorLink>{menu === "services" ? <img src={underline} alt='' /> : <></>}</li>
-        <li><AnchorLink className='anchor-link' offset={50} href='#work'><p onClick={() => setMenu("work")}>Portfolio</p></AnchorLink>{menu === "work" ? <img src={underline} alt='' /> : <></>}</li>
-        <li><AnchorLink className='anchor-link' offset={50} href='#feedback'><p onClick={() => setMenu("feedback")}>Feedback</p></AnchorLink>{menu === "contact" ? <img src={underline} alt='' /> : <></>}</li>
-      </ul>
-      <div className="nav-connect">
-        <AnchorLink className='anchor-link' offset={50} href='#contact'>Connect With Me</AnchorLink>
-      </div>
-    </div>
+    <>
+      {/* Backdrop overlay for mobile drawer */}
+      <div ref={overlayRef} className="nav-overlay" onClick={closeMenu} />
+
+      <nav
+        className="navbar"
+        style={scrolled ? {
+          boxShadow: '0 8px 48px rgba(0,0,0,0.6), 0 0 80px rgba(185,35,225,0.1)',
+          background: 'rgba(6, 3, 14, 0.75)',
+        } : {}}
+      >
+        {/* Logo */}
+        <img src={logo} alt="Logo" className="navbar-logo" />
+
+        {/* Hamburger (mobile) */}
+        <button
+          className="nav-mob-open"
+          onClick={openMenu}
+          aria-label="Open navigation"
+          aria-expanded={isOpen}
+        >
+          <img src={menu_open} alt="" />
+        </button>
+
+        {/* Nav Links */}
+        <ul ref={menuRef} className="nav-menu" role="navigation">
+          {/* Close button (mobile drawer) */}
+          <li
+            className="nav-mob-close"
+            onClick={closeMenu}
+            role="button"
+            aria-label="Close navigation"
+          >
+            <img src={menu_close} alt="Close" />
+          </li>
+
+          {NAV_LINKS.map(({ id, label, offset }) => (
+            <li key={id} className={active === id ? 'active' : ''}>
+              <AnchorLink
+                className="anchor-link"
+                href={`#${id}`}
+                offset={offset}
+                onClick={() => handleNav(id)}
+              >
+                {label}
+              </AnchorLink>
+              <span className="nav-active-dot" aria-hidden="true" />
+            </li>
+          ))}
+
+          {/* Connect button inside mobile drawer */}
+          <li className="nav-menu-connect">
+            <AnchorLink
+              className="anchor-link"
+              href="#contact"
+              offset={50}
+              onClick={closeMenu}
+            >
+              Connect With Me
+            </AnchorLink>
+          </li>
+        </ul>
+
+        {/* Desktop CTA */}
+        <div className="nav-connect">
+          <AnchorLink className="anchor-link" offset={50} href="#contact">
+            Connect With Me
+          </AnchorLink>
+        </div>
+      </nav>
+    </>
   )
 }
 
