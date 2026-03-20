@@ -54,10 +54,10 @@ const Mywork = () => {
       </div>
 
       {/* Show more */}
-      <div className="mywork-showmore">
+      {/* <div className="mywork-showmore">
         <p>Show More</p>
         <img src={Arrow_icon} alt="" />
-      </div>
+      </div> */}
 
     </div>
   )

@@ -1,6 +1,6 @@
 import React from 'react'
 import './About.css'
-import profile_img from '../../assets/about_profile.jpg'
+import profile_img from '../../assets/about_profile.png'
 
 const SKILLS = [
   { name: 'HTML & CSS',   pct: 100 },

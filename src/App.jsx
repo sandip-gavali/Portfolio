@@ -10,6 +10,7 @@ import Footer from './Components/Footer/Footer'
 import ProjectDetail from './Components/ProjectDetail/ProjectDetail'
 import Resume from './Components/Resume/Resume'
 import './App.css'
+import ServiceDetail from './Components/ServiceDetail/ServiceDetail'
 
 // All portfolio sections
 const Home = () => (
@@ -30,6 +31,7 @@ const App = () => {
       <Route path="/"            element={<Home />} />
       <Route path="/project/:id" element={<ProjectDetail />} />
       <Route path="/resume"      element={<Resume />} />
+      <Route path="/serviceopen/:id" element={<ServiceDetail/>} />
     </Routes>
   )
 }

@@ -1,9 +1,15 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Services.css'
 import Services_Data from '../../assets/services_data'
 import Arrow_icon from '../../assets/arrow_icon.svg'
 
 const Services = () => {
+    const navigate = useNavigate()
+
+  const handleViewService = (service) => {
+    navigate(`/serviceopen/${service.s_no}`)   // goes to /project/1, /project/2, etc.
+  }
   return (
     <div id="services" className="services">
 
@@ -23,7 +29,9 @@ const Services = () => {
       {/* Cards */}
       <div className="services-container">
         {Services_Data.map((service, index) => (
-          <div key={index} className="services-format">
+          <div key={index} className="services-format"
+            onClick={() => handleViewService(service)}   // whole card is clickable
+            style={{ cursor: 'pointer' }}>
             <h3>{service.s_no}</h3>
             <h2>{service.s_name}</h2>
             <div className="services-divider" />
