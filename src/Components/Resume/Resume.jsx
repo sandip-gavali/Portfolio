@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Resume.css'
-import resumePDF from '../../assets/resume.pdf'
+import resumePDF from '../../assets/Resume.pdf'
 
 /* ── Data ──────────────────────────────────────────────────── */
 const SKILLS = [
