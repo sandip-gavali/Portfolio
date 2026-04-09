@@ -78,6 +78,7 @@ const Resume = () => {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     // mark loaded after the loader animation window (1.4s fade + slight buffer)
     const t = setTimeout(() => setLoaded(true), 1500)
     return () => clearTimeout(t)
